@@ -1,0 +1,36 @@
+pipeline{
+    agent any
+
+       environment {
+            DEPLOY = "${env.BRANCH_NAME == "main" || env.BRANCH_NAME == "master" ? "true" : "false"}"
+            NAME = "${env.BRANCH_NAME == "master" ? "example" : "example-staging"}"
+            def mavenHome =  tool name: "maven:3.8.6", type: "maven"
+            def mavenCMD = "${mavenHome}/bin/mvn"
+            VERSION = "${env.BUILD_ID}"
+            REGISTRY = 'eagunuworld/mongodb-springboot-app'
+            REGISTRY_CREDENTIAL = 'eagunuworld_credentials'
+          }
+
+    stages {
+         stage('maven build package') {
+              steps {
+                  sh "${mavenCMD} clean package"
+                   }
+                }
+
+          stage('Docker Build') {
+                steps {
+                   sh "docker build -t ${REGISTRY}:${VERSION} ."
+                    }
+                 }
+
+        stage('Docker Publish') {
+              steps {
+                   withCredentials([string(credentialsId: 'docker_password', variable: 'docker_password')]) {
+                   sh "docker login -u eagunuworld -p ${docker_password}"
+                   }
+                 sh 'docker push ${REGISTRY}:${VERSION}'
+                }
+             }
+ }
+}
