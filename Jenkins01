@@ -7,7 +7,7 @@ pipeline{
             def mavenHome =  tool name: "maven:3.8.6", type: "maven"
             def mavenCMD = "${mavenHome}/bin/mvn"
             VERSION = "${env.BUILD_ID}"
-            REGISTRY = 'eagunuworld/${env.JOB_NAME}'
+            REGISTRY = 'eagunuworld/mongodb-springboot-app'
             REGISTRY_CREDENTIAL = 'eagunuworld_credentials'
           }
 
