@@ -6,7 +6,7 @@ pipeline{
             NAME = "${env.BRANCH_NAME == "master" ? "example" : "example-staging"}"
             def mavenHome =  tool name: "maven:3.8.6", type: "maven"
             def mavenCMD = "${mavenHome}/bin/mvn"
-            VERSION = "${env.BUILD_ID}"
+            VERSION = "${env.main-${JOB_NAME}-${BUILD_NUMBER}}"
             REGISTRY = 'eagunuworld/mongodb-springboot-app'
             REGISTRY_CREDENTIAL = 'eagunuworld_credentials'
           }
