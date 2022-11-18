@@ -63,7 +63,6 @@ pipeline{
     stage('Display All Files In Console') {
             steps {
                sh 'ls -lart'
-               sh 'docker images'
             }
           }
 
