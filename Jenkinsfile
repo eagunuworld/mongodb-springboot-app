@@ -63,6 +63,7 @@ pipeline{
     stage('Display All Files In Console') {
             steps {
                sh 'ls -lart'
+               sh 'docker container ls '
             }
           }
 
@@ -70,7 +71,6 @@ pipeline{
         steps {
               sh 'docker ps -f name=framed -q | xargs --no-run-if-empty docker container stop'
               sh 'docker container ls -a -fname=framed  -q | xargs -r docker container rm'
-              sh 'docker container ls '
                 }
             }
 
