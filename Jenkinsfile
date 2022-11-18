@@ -55,7 +55,7 @@ pipeline{
         stage('Push Docker Image To DockerHub') {
               steps {
                    withCredentials([string(credentialsId: 'eagunuworld_dockerhub_creds', variable: 'eagunuworld_dockerhub_creds')])  {
-                   sh "docker login -u eagunuworld -p ${REGISTRY_CREDENTIAL} "
+                   sh "docker login -u eagunuworld -p ${eagunuworld_dockerhub_creds} "
                    }
                  sh 'docker push ${REGISTRY}:${VERSION}'
                 }
