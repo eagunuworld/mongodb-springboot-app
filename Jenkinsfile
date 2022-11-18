@@ -7,7 +7,7 @@ pipeline{
        environment {
             DEPLOY = "${env.BRANCH_NAME == "python-dramed" || env.BRANCH_NAME == "master" ? "true" : "false"}"
             NAME = "${env.BRANCH_NAME == "python-dramed" ? "example" : "example-staging"}"
-            //def mavenHome =  tool name: "maven:11.0.16", type: "maven"
+            def mavenHome =  tool name: "maven:3.6.3", type: "maven"
             //def mavenCMD = "${mavenHome}/usr/share/maven"
             VERSION = "${env.BUILD_ID}"
             REGISTRY = 'eagunuworld/mongodb-springboot-app'
