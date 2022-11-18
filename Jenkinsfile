@@ -4,6 +4,10 @@ pipeline{
         label "javaAgent"
          }
 
+    tools{
+         maven 'maven:3.6.3'
+          }
+
        environment {
             DEPLOY = "${env.BRANCH_NAME == "python-dramed" || env.BRANCH_NAME == "master" ? "true" : "false"}"
             NAME = "${env.BRANCH_NAME == "python-dramed" ? "example" : "example-staging"}"
