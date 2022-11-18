@@ -60,17 +60,16 @@ pipeline{
                  sh 'docker push ${REGISTRY}:${VERSION}'
                 }
              }
-    stage('stop previous containers') {
+    stage('Display All Files In Console') {
             steps {
-               sh 'docker-compose -f docker-compose-springapp.yml down:docker ps -f name=framed -q | xargs --no-run-if-empty docker container stop'
-               sh 'docker container ls -a -fname=framed  -q | xargs -r docker container rm'
+               sh 'ls -lart'
             }
           }
 
     stage('Docker Run') {
         steps{
             script {
-              sh 'docker run -d -p 8085:5000 --rm --name framed ${REGISTRY}:${VERSION}'
+              sh 'docker run -d -p 8080:8080 --rm --name framed ${REGISTRY}:${VERSION}'
                }
              }
          }
