@@ -52,7 +52,7 @@ pipeline{
                      }
                  }
 
-        stage('Push Docker Image To DockerHub') {
+    stage('Push Docker Image To DockerHub') {
               steps {
                    withCredentials([string(credentialsId: 'eagunuworld_dockerhub_creds', variable: 'eagunuworld_dockerhub_creds')])  {
                    sh "docker login -u eagunuworld -p ${eagunuworld_dockerhub_creds} "
@@ -63,8 +63,17 @@ pipeline{
     stage('Display All Files In Console') {
             steps {
                sh 'ls -lart'
+               sh 'docker images'
             }
           }
+
+  stage('How to remove image') {
+        steps{
+            script {
+                sh 'docker rmi  $(docker images -q)'
+                  }
+              }
+            }
 
   stage('Display containers ') {
         steps {
@@ -74,20 +83,5 @@ pipeline{
                 }
             }
 
-    stage('Docker Run') {
-        steps{
-            script {
-              sh 'docker run -d -p 8085:8080 --rm --name framed ${REGISTRY}:${VERSION}'
-               }
-             }
-         }
-    stage('Deleting Old versions ') {
-        agent {
-              label "python-node"
-                  }
-            steps {
-                sh "docker rmi -f ${REGISTRY}:${VERSION}"
-              }
-        }
    }
 }
