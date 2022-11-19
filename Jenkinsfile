@@ -66,6 +66,18 @@ pipeline{
             }
           }
 
+  stage('Update Image Tage in Compose  ') {
+      steps {
+            sh "sed -i BUILD_TAG ${VERSION} docker-compose.yml"
+            }
+      }
+
+  stage('Display docker-compose content ') {
+        steps {
+            sh 'cat docker-compose.yml'
+            }
+        }
+
   stage('How to remove image') {
         steps{
             script {
