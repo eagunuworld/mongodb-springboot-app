@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   springboot:
-    image: eagunuworld/mongodb-springboot-app:BUILD_TAG
+    image: eagunuworld/mongodb-springboot-app:22
     restart: always # This will be ignored if we deploy in docker swarm
     container_name: springboot
     environment:

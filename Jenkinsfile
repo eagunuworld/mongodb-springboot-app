@@ -82,15 +82,34 @@ pipeline{
             }
         }
 
+  stage('Stop And Remove Running Container') {
+      steps{
+          sshagent(['ec2-user-password-credentials']) {
+               sh 'docker ps -f name=springboot -q | xargs --no-run-if-empty docker container stop'
+               sh 'docker container ls -a -fname=springboot  -q | xargs -r docker container rm'
+               sh 'docker container ls '
+                  }
+                }
+             }
+
+  stage('Remove All Images Before Deployment') {
+        steps{
+            sshagent(['ec2-user-password-credentials']) {
+              sh 'docker rmi  $(docker images -q)'
+                  }
+               }
+             }
+
  stage('Deploy On Prod') {
      steps{
        sshagent(['ec2-user-password-credentials']) {
             sh "scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@18.219.210.241:"
+            sh "scp -o StrictHostKeyChecking=no ec2-user@18.219.210.241 docker-compose.yml up -d"
            }
          }
       }
 
-  stage('How to remove image') {
+  stage('Remove images from Agent Server') {
         steps{
             script {
                 sh 'docker rmi  $(docker images -q)'
@@ -98,7 +117,7 @@ pipeline{
               }
             }
 
-  stage('Display containers ') {
+  stage('Remove ps from Agent Server') {
         steps {
               sh 'docker ps -f name=framed -q | xargs --no-run-if-empty docker container stop'
               sh 'docker container ls -a -fname=framed  -q | xargs -r docker container rm'
