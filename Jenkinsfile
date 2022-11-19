@@ -66,12 +66,16 @@ pipeline{
             }
           }
 
-  stage('Update Image Tage in Compose  ') {
-      steps {
-            sh "sed -i BUILD_TAG${VERSION} docker-compose.yml "
-            }
-      }
-
+  stage('Update docker-compose Tag'){
+      steps{
+          	script{
+          				    sh '''final_tag=$(echo $VERSION | tr -d ' ')
+          				     echo ${final_tag}test
+          				     sed -i "s/BUILD_TAG/$final_tag/g"  deployment.yaml
+          				     '''
+          				  }
+          			 }
+          		}
   stage('Display docker-compose content ') {
         steps {
             sh 'cat docker-compose.yml'
