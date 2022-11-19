@@ -71,7 +71,7 @@ pipeline{
           	script{
           				    sh '''final_tag=$(echo $VERSION | tr -d ' ')
           				     echo ${final_tag}test
-          				     sed -i "s/BUILD_TAG/$final_tag/g"  deployment.yaml
+          				     sed -i "s/BUILD_TAG/$final_tag/g"  docker-compose.yml
           				     '''
           				  }
           			 }
