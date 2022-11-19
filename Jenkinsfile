@@ -68,7 +68,7 @@ pipeline{
 
   stage('Update Image Tage in Compose  ') {
       steps {
-            sh "sed -i /<\/BUILD_TAG >/ i\${VERSION} docker-compose.yml "
+            sh "sed -i BUILD_TAG${VERSION} docker-compose.yml "
             }
       }
 
