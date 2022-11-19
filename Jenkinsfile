@@ -104,7 +104,7 @@ pipeline{
      steps{
        sshagent(['ec2-user-password-credentials']) {
             sh "scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@18.219.210.241:"
-            sh "ssh -o StrictHostKeyChecking=no ec2-user@18.219.210.241 docker-compose.yml up -d"
+            sh "ssh -o StrictHostKeyChecking=no ec2-user@18.219.210.241 docker-compose up -d"
            }
          }
       }
